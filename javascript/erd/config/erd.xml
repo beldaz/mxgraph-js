@@ -13,23 +13,30 @@
 	</ui>
 	<Array as="templates">
 		<add as="group">
-			<Group label="" href="">
+			<Group label="" >
 				<mxCell vertex="1" style="group" connectable="0"/>
 			</Group>
 		</add>
 		<add as="connector">
-			<Connector label="" href="">
+			<Connector label="">
 				<mxCell edge="1">
 					<mxGeometry as="geometry" relative="1"/>
 				</mxCell>
 			</Connector>
 		</add>
-		<add as="rectangle">
-			<Rect label="Unnamed" href="">
-				<mxCell vertex="1">	
+		<add as="entity">
+			<Entity label="Unnamed" >
+				<mxCell vertex="1" style="rectangle">	
 					<mxGeometry as="geometry" width="80" height="40"/>
 				</mxCell>
-			</Rect>
+			</Entity>
+		</add>
+		<add as="weakentity">
+			<Entity label="Unnamed" option="weak">
+				<mxCell vertex="1" style="doubleRectangle">	
+					<mxGeometry as="geometry" width="80" height="40"/>
+				</mxCell>
+			</Entity>
 		</add>
 		<add as="text">
 			<Text label="Text Here" href="">
@@ -38,8 +45,36 @@
 				</mxCell>
 			</Text>
 		</add>
+		<add as="isa">
+			<IsA label="IsA" >
+				<mxCell vertex="1" style="triangle">		
+					<mxGeometry as="geometry" width="60" height="60"/>
+				</mxCell>
+			</IsA>
+		</add>
+		<add as="attribute">
+			<Attribute label="unnamed" >
+				<mxCell vertex="1" style="ellipse">		
+					<mxGeometry as="geometry" width="60" height="40"/>
+				</mxCell>
+			</Attribute>
+		</add>
+		<add as="multiattribute">
+			<Attribute label="unnamed" option="multi">
+				<mxCell vertex="1" style="doubleEllipse">		
+					<mxGeometry as="geometry" width="60" height="40"/>
+				</mxCell>
+			</Attribute>
+		</add>
+		<add as="relationship">
+			<Relationship label="unnamed">
+				<mxCell vertex="1" style="rhombus">		
+					<mxGeometry as="geometry" width="60" height="60"/>
+				</mxCell>
+			</Relationship>
+		</add>
 		<add as="shape">
-			<Shape label="Unnamed" href="">
+			<Shape label="some shape" href="">
 				<mxCell vertex="1" style="ellipse">		
 					<mxGeometry as="geometry" width="60" height="60"/>
 				</mxCell>
@@ -80,7 +115,7 @@
 		]]></add>
 		<mxStylesheet as="stylesheet">
 			<add as="text">
-				<add as="shape" value="rectangle"/>
+				<add as="shape" value="label"/>
 				<add as="perimeter" value="rectanglePerimeter"/>
 				<add as="fontSize" value="12"/>
 				<add as="align" value="left"/>
@@ -109,7 +144,7 @@
 				<add as="strokeColor" value="gray"/>
 				<add as="dashed" value="1"/>
 			</add>
-			<add as="defaultEdge">
+			<add as="straightConnector">
 				<add as="shape" value="connector"/>
 				<add as="fontSize" value="10"/>
 				<add as="align" value="center"/>
@@ -118,25 +153,23 @@
 				<add as="labelBackgroundColor" value="white"/>
 				<add as="strokeColor" value="#36393D"/>
 				<add as="strokeWidth" value="1"/>
-				<add as="edgeStyle" value="elbowEdgeStyle"/>
+				<add as="edgeStyle" value="straightConnector"/>
 				<add as="endArrow" value="classic"/>
 			</add>
-			<add as="verticalConnector">
+			<add as="defaultEdge" extend="straightConnector">
+				<add as="shape" value="connector"/>
+				<add as="edgeStyle" value="straightConnector"/>
+			</add>
+			<add as="elbowConnector" extend="straightConnector">
+				<add as="shape" value="connector"/>
+				<add as="edgeStyle" value="elbowConnector"/>
 				<add as="elbow" value="vertical"/>
 			</add>
-			<add as="straightConnector">
-				<add as="shape" value="connector"/>
-				<add as="endArrow" value="classic"/>
-				<add as="edgeStyle">null</add>
-			</add>
-			<add as="arrowConnector">
+			<add as="arrowConnector" extend="straightConnector">
 				<add as="shape" value="arrow"/>
 				<add as="fillColor" value="#C3D9FF"/>
 				<add as="endSize" value="20"/>
 				<remove as="edgeStyle"/>
-			</add>
-			<add as="rounded">
-				<add as="rounded" value="1"/>
 			</add>
 			<add as="ellipse">
 				<add as="shape" value="ellipse"/>
@@ -158,13 +191,16 @@
 			<add as="rhombus">
 				<add as="shape" value="rhombus"/>
 				<add as="perimeter" value="rhombusPerimeter"/>
-				<add as="strokeColor" value="#FFCF8A"/>
-				<add as="fillColor" value="#FFCF8A"/>
+				<add as="strokeColor" value="black"/>
+				<add as="fillColor" value="white"/>
 			</add>
-			<add as="triangle" extend="rhombus">
+			<add as="triangle">
 				<add as="shape" value="triangle"/>
 				<add as="perimeter" value="trianglePerimeter"/>
-				<add as="align" value="left"/>
+				<add as="rotation" value="270"/>
+				<add as="portConstraintRotation" value="1"/>
+				<add as="align" value="center"/>
+				<add as="verticalAlign" value="middle"/>
 			</add>
 		</mxStylesheet>
 		<mxGraphModel as="model">
@@ -206,21 +242,21 @@
 		</mxGraphModel>
 	</mxGraph>
 	<mxDefaultToolbar as="toolbar">
-		<add as="elbow connect" mode="connect" icon="images/connect.gif"><![CDATA[
-			function (editor)
-			{
-				if (editor.defaultEdge != null)
-				{
-					editor.defaultEdge.style = null;
-				}
-			}
-		]]></add>
 		<add as="straight connect" mode="connect" icon="images/straight.gif"><![CDATA[
 			function (editor)
 			{
 				if (editor.defaultEdge != null)
 				{
 					editor.defaultEdge.style = 'straightConnector';
+				}
+			}
+		]]></add>
+		<add as="elbow connect" mode="connect" icon="images/connect.gif"><![CDATA[
+			function (editor)
+			{
+				if (editor.defaultEdge != null)
+				{
+					editor.defaultEdge.style = 'elbowConnector';
 				}
 			}
 		]]></add>
@@ -235,11 +271,11 @@
 		]]></add>
 		<br/><br/>
 		<add as="Text" template="text" icon="images/text.gif"/>
-		<add as="Rectangle" template="rectangle" icon="images/rectangle.gif"/>
-		<add as="Ellipse" template="shape" style="ellipse" icon="images/ellipse.gif"/>
-		<add as="Double Rectangle" template="shape" style="doubleRectangle" icon="images/doublerectangle.gif"/>
-		<add as="Double Ellipse" template="shape" style="doubleEllipse" icon="images/doubleellipse.gif"/>
-		<add as="Rhombus" template="shape" style="rhombus" icon="images/rhombus.gif"/>
-		<add as="Triangle" template="shape" style="triangle" icon="images/triangle.gif"/>
+		<add as="Rectangle" template="entity" icon="images/rectangle.gif"/>
+		<add as="Ellipse" template="attribute" style="ellipse" icon="images/ellipse.gif"/>
+		<add as="Double Rectangle" template="weakentity" style="doubleRectangle" icon="images/doublerectangle.gif"/>
+		<add as="Double Ellipse" template="multiattribute" style="doubleEllipse" icon="images/doubleellipse.gif"/>
+		<add as="Diamond" template="relationship" style="rhombus" icon="images/rhombus.gif"/>
+		<add as="Triangle" template="isa" style="triangle" icon="images/triangle.gif"/>
 	</mxDefaultToolbar>
 </mxEditor>
